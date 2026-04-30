@@ -88,7 +88,7 @@ window.config = {
       ],
     },
   ],
-  defaultDataSourceName: 'ohif',
+  defaultDataSourceName: 'ctread',
   /* Dynamic config allows user to pass "configUrl" query string this allows to load config without recompiling application. The regex will ensure valid configuration source */
   // dangerouslyUseDynamicConfig: {
   //   enabled: true,
@@ -100,6 +100,30 @@ window.config = {
   //   regex: /.*/,
   // },
   dataSources: [
+    {
+      namespace: '@ohif/extension-default.dataSourcesModule.dicomweb',
+      sourceName: 'ctread',
+      configuration: {
+        friendlyName: 'CTRead Production PACS',
+        name: 'ctread',
+        wadoUriRoot: 'https://pacs.ctread.ca/dicom-web',
+        qidoRoot: 'https://pacs.ctread.ca/dicom-web',
+        wadoRoot: 'https://pacs.ctread.ca/dicom-web',
+        qidoSupportsIncludeField: true,
+        supportsReject: true,
+        dicomUploadEnabled: true,
+        imageRendering: 'wadors',
+        thumbnailRendering: 'wadors',
+        enableStudyLazyLoad: true,
+        supportsFuzzyMatching: true,
+        supportsWildcard: true,
+        omitQuotationForMultipartRequest: true,
+        bulkDataURI: {
+          enabled: true,
+          relativeResolution: 'studies',
+        },
+      },
+    },
     {
       namespace: '@ohif/extension-default.dataSourcesModule.dicomweb',
       sourceName: 'ohif',
