@@ -608,7 +608,7 @@ const WADO_IMAGE_LOADER = {
       frameOfReferenceUID: instance.FrameOfReferenceUID,
       rows: toNumber(instance.Rows),
       columns: toNumber(instance.Columns),
-      spacingBetweenSlices: toNumber(instance.SpacingBetweenSlices),
+      spacingBetweenSlices: Math.abs(toNumber(instance.SpacingBetweenSlices)),
       imageOrientationPatient,
       rowCosines,
       isDefaultValueSetForRowCosine,
