@@ -255,11 +255,6 @@ window.config = {
         bulkDataURI: {
           enabled: true,
         },
-        requestOptions: {
-          headers: {
-            Authorization: 'Basic YWRtaW46Q3RSZWFkQFBhY3MyMDI2IQ==',
-          },
-        },
       },
     },
 
