@@ -147,6 +147,8 @@ function createDicomWebApi(dicomWebConfig: DicomWebConfig, servicesManager) {
         const authHeaders = userAuthenticationService.getAuthorizationHeader();
         if (authHeaders && authHeaders.Authorization) {
           xhrRequestHeaders.Authorization = authHeaders.Authorization;
+        } else if (dicomWebConfig.requestOptions?.headers?.Authorization) {
+          xhrRequestHeaders.Authorization = dicomWebConfig.requestOptions.headers.Authorization;
         }
         return xhrRequestHeaders;
       };
