@@ -14,6 +14,8 @@ import PropTypes from 'prop-types';
 import { routerBasename } from '../utils/publicUrl';
 import { useAppConfig } from '@state';
 import { history } from '../utils/history';
+import LoginPage from '../components/LoginPage';
+import BasicAuthInitializer from '../components/BasicAuthInitializer';
 
 const NotFoundServer = ({
   message = 'Unable to query for studies at this time. Check your data source configuration or network connection',
@@ -131,7 +133,7 @@ const createRoutes = ({
 
   const allRoutes = [
     ...routes,
-    ...(showStudyList ? [WorkListRoute] : []),
+    WorkListRoute,
     ...(customRoutes?.routes || []),
     ...bakedInRoutes,
     customRoutes?.notFoundRoute || notFoundRoute,
@@ -167,29 +169,36 @@ const createRoutes = ({
   // to check if it is enabled or not
   // Todo: I think we can remove the second public return below
   return (
-    <Routes>
-      {allRoutes.map((route, i) => {
-        return route.private === true ? (
-          <Route
-            key={i}
-            path={route.path}
-            element={
-              <PrivateRoute
-                handleUnauthenticated={() => userAuthenticationService.handleUnauthenticated()}
-              >
-                <RouteWithErrorBoundary route={route} />
-              </PrivateRoute>
-            }
-          ></Route>
-        ) : (
-          <Route
-            key={i}
-            path={route.path}
-            element={<RouteWithErrorBoundary route={route} />}
-          />
-        );
-      })}
-    </Routes>
+    <>
+      <BasicAuthInitializer userAuthenticationService={userAuthenticationService} />
+      <Routes>
+        <Route
+          path="/login"
+          element={<LoginPage userAuthenticationService={userAuthenticationService} />}
+        />
+        {allRoutes.map((route, i) => {
+          return route.private === true ? (
+            <Route
+              key={i}
+              path={route.path}
+              element={
+                <PrivateRoute
+                  handleUnauthenticated={() => userAuthenticationService.handleUnauthenticated()}
+                >
+                  <RouteWithErrorBoundary route={route} />
+                </PrivateRoute>
+              }
+            ></Route>
+          ) : (
+            <Route
+              key={i}
+              path={route.path}
+              element={<RouteWithErrorBoundary route={route} />}
+            />
+          );
+        })}
+      </Routes>
+    </>
   );
 };
 

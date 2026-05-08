@@ -11,6 +11,7 @@ import filtersMeta from './filtersMeta.js';
 import { useAppConfig } from '@state';
 import { useDebounce, useSearchParams } from '../../hooks';
 import { utils, Types as coreTypes } from '@ohif/core';
+import { clearAuth, loadAuth } from '../../utils/basicAuth';
 
 import {
   StudyListExpandedRow,
@@ -511,6 +512,17 @@ function WorkList({
       title: t('Header:Logout'),
       onClick: () => {
         navigate(`/logout?redirect_uri=${encodeURIComponent(window.location.href)}`);
+      },
+    });
+  }
+
+  if (loadAuth()) {
+    menuOptions.push({
+      icon: 'power-off',
+      title: 'Logout',
+      onClick: () => {
+        clearAuth();
+        navigate('/login', { replace: true });
       },
     });
   }

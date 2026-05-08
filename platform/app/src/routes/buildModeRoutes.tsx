@@ -59,7 +59,7 @@ export default function buildModeRoutes({
       routes.push({
         path,
         children,
-        private: true,
+        private: false,
       });
     });
 
@@ -81,7 +81,7 @@ export default function buildModeRoutes({
     routes.push({
       path,
       children,
-      private: true,
+      private: false,
     });
   });
 

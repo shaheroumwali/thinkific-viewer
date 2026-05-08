@@ -106,41 +106,12 @@ window.config = {
       configuration: {
         friendlyName: 'CTRead Production PACS',
         name: 'ctread',
-        wadoUriRoot: 'http://localhost:8002/dicom-web',
-        qidoRoot: 'http://localhost:8002/dicom-web',
-        wadoRoot: 'http://localhost:8002/dicom-web',
+        wadoUriRoot: 'https://pacs.ctread.ca/dicom-web',
+        qidoRoot: 'https://pacs.ctread.ca/dicom-web',
+        wadoRoot: 'https://pacs.ctread.ca/dicom-web',
         qidoSupportsIncludeField: true,
-        supportsReject: true,
-        dicomUploadEnabled: true,
-        imageRendering: 'wadors',
-        thumbnailRendering: 'wadors',
-        enableStudyLazyLoad: true,
-        supportsFuzzyMatching: true,
-        supportsWildcard: true,
-        omitQuotationForMultipartRequest: true,
-        bulkDataURI: {
-          enabled: true,
-          relativeResolution: 'studies',
-        },
-        requestOptions: {
-          headers: {
-            Authorization: 'Basic YWRtaW46Q3RSZWFkQFBhY3MyMDI2IQ==',
-          },
-        },
-      },
-    },
-    {
-      namespace: '@ohif/extension-default.dataSourcesModule.dicomweb',
-      sourceName: 'orthanc',
-      configuration: {
-        friendlyName: 'local Orthanc DICOMWeb Server',
-        name: 'orthanc',
-        wadoUriRoot: 'http://localhost:8002/dicom-web',
-        qidoRoot: 'http://localhost:8002/dicom-web',
-        wadoRoot: 'http://localhost:8002/dicom-web',
-        qidoSupportsIncludeField: true,
-        supportsReject: true,
-        dicomUploadEnabled: true,
+        supportsReject: false,
+        dicomUploadEnabled: false,
         imageRendering: 'wadors',
         thumbnailRendering: 'wadors',
         enableStudyLazyLoad: true,
@@ -164,7 +135,7 @@ window.config = {
     console.warn(error.status);
 
     // Could use services manager here to bring up a dialog/modal if needed.
-    console.warn('test, navigate to https://ohif.org/');
+    // console.warn('test, navigate to https://ohif.org/');
   },
   // segmentation: {
   //   segmentLabel: {
