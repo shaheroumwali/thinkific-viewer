@@ -15,7 +15,7 @@ function ViewportPane({
   onDrop,
   onDoubleClick,
   onInteraction = () => {},
-  acceptDropsFor,
+  acceptDropsFor = '__disabled__',
 }) {
   let dropElement = null;
 
@@ -81,8 +81,8 @@ ViewportPane.propTypes = {
   children: PropTypes.node.isRequired,
   className: PropTypes.string,
   isActive: PropTypes.bool.isRequired,
-  acceptDropsFor: PropTypes.string.isRequired,
-  onDrop: PropTypes.func.isRequired,
+  acceptDropsFor: PropTypes.string,
+  onDrop: PropTypes.func,
   onInteraction: PropTypes.func.isRequired,
   onDoubleClick: PropTypes.func,
   customStyle: PropTypes.object,

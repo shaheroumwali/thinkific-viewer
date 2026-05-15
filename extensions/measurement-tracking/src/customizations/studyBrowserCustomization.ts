@@ -31,12 +31,6 @@ const onDoubleClickHandler = {
           }
         } catch (error) {
           console.warn(error);
-          uiNotificationService.show({
-            title: 'Thumbnail Double Click',
-            message: 'The selected display sets could not be added to the viewport.',
-            type: 'error',
-            duration: 3000,
-          });
         }
       },
   ],

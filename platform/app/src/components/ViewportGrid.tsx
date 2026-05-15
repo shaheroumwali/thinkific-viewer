@@ -280,8 +280,6 @@ function ViewerViewportGrid(props: withAppTypes) {
           // however, if the key is the viewportId, React will only move the component
           // and not re-render it.
           key={viewportId}
-          acceptDropsFor="displayset"
-          onDrop={onDropHandler.bind(null, viewportId)}
           onInteraction={onInteractionHandler}
           customStyle={{
             position: 'absolute',
