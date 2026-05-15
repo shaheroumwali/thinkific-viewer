@@ -149,23 +149,45 @@ function ViewerViewportGrid(props: withAppTypes) {
     }
   }, [viewportGridService, generateLayoutHash]);
 
+  const isDropPending = useRef(false);
+
   const onDropHandler = (viewportId, { displaySetInstanceUID }) => {
+    if (isDropPending.current) {
+      return;
+    }
+    isDropPending.current = true;
+
     const { viewportGridService } = servicesManager.services;
     const customOnDropHandler = customizationService.getCustomization('customOnDropHandler');
-    const dropHandlerPromise = customOnDropHandler({
-      ...props,
-      viewportId,
-      displaySetInstanceUID,
-      appConfig,
-    });
-    dropHandlerPromise.then(({ handled }) => {
-      if (!handled) {
-        const updatedViewports = _getUpdatedViewports(viewportId, displaySetInstanceUID);
 
-        commandsManager.run('setDisplaySetsForViewports', { viewportsToUpdate: updatedViewports });
-      }
-    });
-    viewportGridService.publishViewportOnDropHandled({ displaySetInstanceUID });
+    let dropHandlerPromise;
+    try {
+      dropHandlerPromise = customOnDropHandler({
+        ...props,
+        viewportId,
+        displaySetInstanceUID,
+        appConfig,
+      });
+    } catch (err) {
+      console.error('Drop handler error:', err);
+      isDropPending.current = false;
+      return;
+    }
+
+    dropHandlerPromise
+      .then(({ handled }) => {
+        if (!handled) {
+          const updatedViewports = _getUpdatedViewports(viewportId, displaySetInstanceUID);
+          commandsManager.run('setDisplaySetsForViewports', { viewportsToUpdate: updatedViewports });
+        }
+        viewportGridService.publishViewportOnDropHandled({ displaySetInstanceUID });
+      })
+      .catch(err => {
+        console.error('MPR drop failed:', err);
+      })
+      .finally(() => {
+        isDropPending.current = false;
+      });
   };
 
   const getViewportPanes = useCallback(() => {
@@ -258,8 +280,6 @@ function ViewerViewportGrid(props: withAppTypes) {
           // however, if the key is the viewportId, React will only move the component
           // and not re-render it.
           key={viewportId}
-          acceptDropsFor="displayset"
-          onDrop={onDropHandler.bind(null, viewportId)}
           onInteraction={onInteractionHandler}
           customStyle={{
             position: 'absolute',

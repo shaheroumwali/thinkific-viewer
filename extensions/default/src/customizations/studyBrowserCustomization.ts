@@ -63,14 +63,6 @@ export default {
             );
           } catch (error) {
             console.warn(error);
-            uiNotificationService.show({
-              title: i18n.t('StudyBrowser:Thumbnail Double Click'),
-              message: i18n.t(
-                'StudyBrowser:The selected display sets could not be added to the viewport.'
-              ),
-              type: 'error',
-              duration: 3000,
-            });
           }
 
           commandsManager.run('setDisplaySetsForViewports', {
